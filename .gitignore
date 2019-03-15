@@ -71,6 +71,7 @@ coverage.xml
 *.mo
 
 # Django stuff:
+migrations
 
 # Flask stuff:
 instance/
