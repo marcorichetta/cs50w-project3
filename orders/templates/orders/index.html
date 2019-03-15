@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
-    <title>Project 3</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <h1>Pizzas</h1>
-    {% for pizza in pizzas %}
-        <li>
-            {{ pizza }}
-        </li>
-    {% endfor %}
-</body>
-</html>
+{% extends "orders/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h1>Ordered Pizzas</h1>
+        {% for pizza in pizzas %}
+            <li>
+                {{ pizza }}
+            </li>
+        {% endfor %}
+    </div>
+{% endblock content%}
