@@ -39,7 +39,7 @@ class Sub(models.Model):
 
     def __str__(self):
         if self.extras.count() == 0:
-            return f"{self.name} - {self.get_size_display()} - $ {self.price} - Extras: 0"
+            return f"{self.name} - {self.get_size_display()} - $ {self.price} - No Extras"
         else:
             return f"{self.name} - {self.get_size_display()} - $ {self.price} - Extras: {self.extras.in_bulk()}"
 

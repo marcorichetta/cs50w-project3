@@ -8,4 +8,34 @@
             </li>
         {% endfor %}
     </div>
+    <div class="dropdown-divider"></div>
+
+    <div class="container" style="display: flex">
+        <div class="col-md-4">
+            <h2>Toppings</h2>
+            <Select multiple size="10">
+                {% for top in toppings %}
+                    <option value="{{ top }}">
+                        {{ top }}
+                    </option>
+                {% endfor %}    
+            </Select>
+        </div>
+        <div class="col-md-4">
+            <h2>Subs</h2>
+                {% for sub in subs %}
+                    <li>
+                        {{ sub }}
+                    </li>
+                {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <h2>Sub Extras</h2>
+                {% for extra in subExtras %}
+                    <li>
+                        {{ extra }}
+                    </li>
+                {% endfor %}
+        </div>
+    </div>
 {% endblock content%}
