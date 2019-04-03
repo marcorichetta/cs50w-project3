@@ -1,21 +1,12 @@
 {% extends "orders/layout.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <div class="container">
-        <h1>Ordered Pizzas</h1>
-        {% for pizza in pizzas %}
-            <li>
-                {{ pizza }}
-            </li>
-        {% endfor %}
-    </div>
-    <div class="dropdown-divider"></div>
-
     <div class="container" style="display: flex">
-        <div class="col-md-4">
+        <div class="col-sm-3 list-group">
             <h2>Toppings</h2>
-            <Select multiple size="10">
+            <Select multiple size="5">
                 {% for top in toppings %}
-                    <option value="{{ top }}">
+                    <option class="list-group-item" value="{{ top }}">
                         {{ top }}
                     </option>
                 {% endfor %}    
@@ -37,5 +28,16 @@
                     </li>
                 {% endfor %}
         </div>
+    </div>
+
+    <div>
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Order a Pizza</legend>
+                {{ form|crispy }}
+            </fieldset>
+        </form>
     </div>
 {% endblock content%}
