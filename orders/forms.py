@@ -1,7 +1,8 @@
 from django.forms import ModelForm
-from orders.models import Pizza
+from orders.models import PizzaOrder
+
 
 class PizzaForm(ModelForm):
     class Meta:
-        model = Pizza
-        fields = '__all__'
+        model = PizzaOrder
+        fields = ['style', 'size', 'extras', 'toppings', 'quantity']

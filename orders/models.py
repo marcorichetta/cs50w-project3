@@ -2,6 +2,16 @@ from django.db import models
 
 # Create your models here.
 
+SIZES = (
+    ("S", "Small"),
+    ("L", "Large")
+)
+
+STYLES = (
+    ('R', 'Regular'),
+    ('S', 'Sicilian')
+)
+
 class Pasta(models.Model):
     name = models.CharField(max_length=40)
     price = models.DecimalField(help_text="Price in U$S",max_digits=4, decimal_places=2)
@@ -18,7 +28,7 @@ class Salad(models.Model):
 
 class DinnerPlatter(models.Model):
     name = models.CharField(max_length=40)
-    size = models.CharField(max_length=10, choices=(('S', 'Small'), ('L', 'Large')))
+    size = models.CharField(max_length=10, choices= SIZES)
     price = models.DecimalField(help_text="Price in U$S", max_digits=5, decimal_places=2)
     
     def __str__(self):
@@ -33,7 +43,7 @@ class SubExtra(models.Model):
 
 class Sub(models.Model):
     name = models.CharField(max_length=40)
-    size = models.CharField(max_length=10, choices=(('S', 'Small'), ('L', 'Large')))
+    size = models.CharField(max_length=10, choices=SIZES)
     price = models.DecimalField(help_text="Price in U$S", max_digits=4, decimal_places=2)
     extras = models.ManyToManyField(SubExtra, blank=True)
 
@@ -50,10 +60,29 @@ class Topping(models.Model):
         return f"{self.name}"
 
 class Pizza(models.Model):
-    style = models.CharField(max_length=10, choices=(('R', 'Regular'), ('S', 'Sicilian')))
-    size = models.CharField(max_length=10, choices=(('S', 'Small'), ('L', 'Large')))
+    style = models.CharField(max_length=10, choices=STYLES)
+    size = models.CharField(max_length=10, choices=SIZES)
     price = models.IntegerField(help_text="Price in U$S")
     toppings = models.ManyToManyField(Topping)
 
     def __str__(self):
         return f"{self.get_style_display()} - {self.get_size_display()} - {self.price} - Toppings: {self.toppings.in_bulk()}"
+
+class PizzaOrder(Pizza):
+    CHOICES = (
+        ('CH', 'Cheese'),
+        ('1', '1 Topping'),
+        ('2', '2 Toppings'),
+        ('3', '3 Toppings'),
+        ('SP', 'Special')
+    )
+
+    style = Pizza.style
+    size = Pizza.size
+    extras = models.CharField(max_length=15 ,choices=CHOICES, default='CH')
+    toppings = Pizza.toppings
+    
+    quantity = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.get_style_display()} - {self.get_size_display()}"
