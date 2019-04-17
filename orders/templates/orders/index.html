@@ -5,17 +5,6 @@
     <legend class="border-bottom mb-4">Pizzas</legend>
 
     <div class="container menu-container">
-<!--         <div class="col-sm-3 list-group">
-            <h2>Toppings</h2>
-            <Select multiple size="5">
-                {% for top in toppings %}
-                    <option class="list-group-item" value="{{ top }}">
-                        {{ top }}
-                    </option>
-                {% endfor %}    
-            </Select>
-        </div> -->
-        
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">Regular</h5>
@@ -93,20 +82,20 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Make your order</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Order your pizza!</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
                         <div>
-                            <form action="{% url 'checkout' %}" method="post">
+                            <form>
                                 {% csrf_token %}
                     
                                 <fieldset class="form-group">
                                     {{ form|crispy }}
                                 </fieldset>
-                                <button type="submit" class="btn btn-moz btn-pop">Add to cart</button>
+                                <button type="button" id="addCart" class="btn btn-moz btn-pop">Add to cart</button>
                             </form>
                         </div>
                 </div>
@@ -117,4 +106,30 @@
               </div>
             </div>
           </div>
+
+          <script>
+              document.addEventListener('DOMContentLoaded', () => {
+                
+                // Initialize key on localStorage
+                if (localStorage.getItem('cart_items') == null) {
+                    localStorage.setItem('cart_items', 0);
+                };
+
+                document.querySelector('#addCart').addEventListener('click', () => {
+                
+                    // Add +1 item on every click to 'Add to cart'
+                    tmp = localStorage.getItem('cart_items');
+                    tmp = parseInt(tmp);
+                    tmp += 1;
+                    localStorage.setItem('cart_items', tmp)
+
+                    // Update 'data-items' which holds the n° of cart items
+                    document.querySelector('#cart_badge').dataset.items = tmp
+                    
+                    // Update the content that is shown on the badge
+                    document.querySelector('#cart_badge').textContent = tmp
+                })
+
+              });
+          </script>
 {% endblock content%}
