@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from orders.forms import PizzaForm, GenericForm
+from orders.forms import PizzaForm
 from orders.models import (DinnerPlatter, Pasta, Pizza, Salad, Sub, SubExtra,
                            Topping)
 
@@ -11,7 +11,6 @@ def index(request):
     """ Homepage where users can view the menu and add items to a virtual cart """
     
     form = PizzaForm()
-    generic_form = GenericForm()
 
     context = {
         "pizzas": Pizza.objects.all(),
@@ -22,8 +21,7 @@ def index(request):
         "pastas": Pasta.objects.all(),
         "platters": DinnerPlatter.objects.all(),
         "salads": Salad.objects.all(),
-        "form": form,
-        "genericForm": generic_form
+        "form": form
     }
 
     return render(request, "orders/index.html", context)
